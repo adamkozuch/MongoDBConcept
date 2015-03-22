@@ -1,10 +1,10 @@
 
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
-
-
-
-
+object HelloMongo extends App {
 
 class creators extends Document[Int,Document,String*](tag,nameOfCollection)
 {
@@ -53,4 +53,5 @@ try {
 
 
   }
+}
 }
