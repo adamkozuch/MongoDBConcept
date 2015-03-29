@@ -6,6 +6,18 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object HelloMongo extends App {
 
+//document for nesting in another document
+//we probably should be able to define documents only in tat purpose
+class address extends Document[Int,String, String](tag,nameOfCollection)//probably name of collection will be empty
+{
+     //this is already implemented
+     def city:Rep[String] = collumn[String]("city");
+     def street:Rep[String] = collumn[String]("street")
+
+     def * =(id,city,street)
+}
+
+
 //basicaly we build schema of document and in case that particular insstance of
 //document do not have particular column or document we deliver in taht place None
 class creators extends Document[Int,Document[String,String],String*](tag,nameOfCollection)
@@ -20,17 +32,19 @@ class creators extends Document[Int,Document[String,String],String*](tag,nameOfC
              def first:Rep[String] = collumn[String]("first");
              def last:Rep[String] = collumn[String]("last")
          }
+    //I should be able to insert document defined in different places
+    //not sure how projection would looks like
+    //def addressOf = new address; not sure about that
 
-     //I have to rethink it because I'm not sure how to make a projection
-     //to such a type. Maybe just provide implementation like with normal
-     //document
+     //In case when in every collection we have defined schema of document
+     //we should be able to check shape of reference
      def reference = new DocumentRef("collection",399393993,"database" )
 
 
      //how to handle arrays
      def contribs(*):Rep[String*] = collumn[String*]("contribs"); //star mean that this is an array
 
-     def * =(id,name->(first,last),contribs*)
+     def * =(id,name->(first,last), ,contribs*)
 }
 
 val db = Database.forURL("mongodb://localhost:27017/test")
