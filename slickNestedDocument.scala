@@ -38,13 +38,13 @@ class creators extends Document[Int,Document[String,String],String*](tag,nameOfC
 
      //In case when in every collection we have defined schema of document
      //we should be able to check shape of reference
-     def reference = new DocumentRef("collection",399393993,"database" )
+     //def reference = new DocumentRef("collection",399393993,"database" )
 
 
      //how to handle arrays
      def contribs(*):Rep[String*] = collumn[String*]("contribs"); //star mean that this is an array
 
-     def * =(id,name->(first,last), ,contribs*)
+     def * =(id,name->(first,last) ,contribs*)
 }
 
 val db = Database.forURL("mongodb://localhost:27017/test")
